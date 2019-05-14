@@ -1,3 +1,5 @@
 # arq-cp
+É um trabalho da matéria de Arquitetura de Computadores orientado pelo professor Márcio Eduardo Kreutz que consiste em projetar um simulador de modelos Parte de Controle (PC) e Parte Operativa (PO) para arquiteturas de conjuntos de instruções. As arquiteturas são compatíveis com o conjunto de instruções dos processadores Neander, Cesar e Ramsés.
 
-<a href="https://docs.google.com/document/d/1GN5y_fh1M9KTwxSecDsW2NrL8zrxTzQexTYy7AZ6ack/edit?usp=sharing">Relatório</a>
+
+### O relatório do projeto pode ser acessado <a href="https://docs.google.com/document/d/1GN5y_fh1M9KTwxSecDsW2NrL8zrxTzQexTYy7AZ6ack/edit?usp=sharing">aqui.</a>
