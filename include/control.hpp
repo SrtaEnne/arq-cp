@@ -32,17 +32,17 @@ class PC {
     void executeInstruction (Instruction instruction);
 
     // Atualiza, de fato, o estado
-    void updateState () {
-        currentState = nextState;
-    }
-
-    void printInfo () {
-        std::cout << "APONTADOR: " << pt << std::endl;
-        std::cout << "ACUMULADOR: " << memory->getAccumulator() << std::endl << std::endl;
-    }
+    void updateState () { currentState = nextState; }
 
     // Chegou ao fim do programa?
-    bool reachedEnd () { return pt == 127 || lastState; }
+    bool reachedEnd () {
+        if (pt == 127 || lastState) {
+            std::cout << "TEMPO DE EXECUÇÃO: " << clock << std::endl;
+            return true;
+        }
+
+        return false;
+    }
 };
 
 #endif

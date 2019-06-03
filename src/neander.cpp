@@ -41,12 +41,4 @@ int main (int argc, char* argv[]) {
         pc.FTE();
         pc.updateState();
     }
-
-    for (int i = 128; i < 256; i++) {
-        int value = mem.readR(i);
-        if (value == 0)
-            break;
-
-        std::cout << i << "\t" << value << std::endl;
-    }
 }

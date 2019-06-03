@@ -1,6 +1,8 @@
 #ifndef ULA_H
 #define ULA_H
 
+#include <iostream>
+
 #include "util.hpp"
 
 class ULA {

@@ -77,6 +77,22 @@ void PC::FS () {
 }
 
 void PC::executeInstruction (Instruction instruct) {
+    ula.setA(memory->getAccumulator());
+    std::cout << "CONTADOR DE PROGRAMA: " << pt << std::endl;
+    std::cout << "REGISTRADOR DE INSTRUÇÃO: " << inst << std::endl;
+    ula.setA(memory->getAccumulator());
+    std::cout << "NEGATIVE: " << ula.isNegative() << std::endl;
+    std::cout << "ZERO: " << ula.isZero() << std::endl;
+    std::cout << "BANCO DE REGISTRADORES: [ENDEREÇO] [VALOR]" << std::endl;
+
+    for (int i = 128; i < 256; i++) {
+        int value = memory->readR(i);        
+        if (value == 0) break;
+        std::cout << i << "\t" << value << std::endl;
+    }
+
+    std::cout << "MEMÓRIA DE DADOS: " << memory->getAccumulator() << std::endl;
+
     switch (instruct.getType()) {
         // Armazena o acumulador em um registrador.
         case Instruction::Code::STA:
@@ -147,6 +163,7 @@ void PC::executeInstruction (Instruction instruct) {
 
         // Pula o apontador caso o acumulador seja negativo
         case Instruction::Code::JN:
+        clock += 1;
         ula.setA(memory->getAccumulator());
         
         if (ula.isNegative())
@@ -155,17 +172,16 @@ void PC::executeInstruction (Instruction instruct) {
 
         // Pula o apontador caso o acumulador seja igual a zero
         case Instruction::Code::JZ:
+        clock += 1;
         ula.setA(memory->getAccumulator());
         
         if (ula.isZero())
             pt = param;
         break;
-        
-        // Interrompe a execução do programa
-        case Instruction::Code::HLT:
-        break;
-        
+                
         default:
         break;
     }
+
+    std::cout << std::endl;
 }
