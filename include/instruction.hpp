@@ -18,13 +18,11 @@ class Instruction {
         JZ,
         HLT
     };
-    
-    private:
-    Code type;      // Tipo da instrução
-    int address;    // Endereço utilizado pela instrução, se for o caso.
 
-    public:
-    Instruction (Code t, int addr = -1) : type{t}, address{addr} {};    
+    Code type;      // Tipo da instrução
+
+    // Construtor padrão
+    Instruction (Code t) : type{t} {}    
 
     // Recebe uma string com o nome da instrução e retorna o enumerator correspondente.
     static Code stringToInstruction (std::string str) {
@@ -60,7 +58,6 @@ class Instruction {
     }
 
     Code getType () { return type; }
-    int getAddress () { return address; }
 };
 
 #endif

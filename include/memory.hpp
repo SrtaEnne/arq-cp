@@ -11,45 +11,45 @@
 // Memória do processador Neander
 class Memory {
     private:
-    std::vector<Instruction> mem;   // Memória 
     int acc = 0;                    // Acumulador
-    int pt = 0;                     // Apontador
-
+    
     public:
     Registers regs;                 // Registradores
 
     // Construtor padrão.
-    Memory (std::vector<Instruction> software) : mem{software} {
-        int index = 0;
+    Memory () {}
 
-        for (Instruction inst : mem) {
-            regs.write(index++, (int)inst.getType());
-            
-            if (inst.getAddress() != -1)
-                regs.write(index++, inst.getAddress());
-        }
-
-        for (int i = 0; i < index; i++) {
-            std::cout << regs.read(i) << " ";
-        }
-
-        std::cout << std::endl;
+    // Lê um dado no registrador na posição do apontador e guarda no acumulador.
+    void load (int address) {
+        acc = regs.read(address);
     }
 
-    // Lê um dado na memória. Recebe o endereço.
-    int read (int address);
+    // Escreve o dado do acumulador no endereço passado.
+    void store (int address) {
+        regs.write(address, acc);
+    }
 
-    // Escreve um dado na memória. Recebe o endereço e o valor.
-    void write (int address, int value);
+    // Lê um dado guardado no registrador. Recebe o endereço.
+    int readR (int address) {
+        return regs.read(address);
+    }
+
+    void writeR (int address, int value) {
+        regs.write(address, value);
+    }
 
     // Lê o acumulador da memória.
-    int getAccumulator ();
+    int getAccumulator () {
+        return acc;
+    }
 
     // Lê o apontador da memória.
     int getPointer ();
 
-    // Edita o acumulador da memória.
-    void setAccumulator (int address);
+    // Edita o acumulador. Recebe o novo valor.
+    void setAccumulator (int value) {
+        acc = value;
+    }
 
     // Edita o apontador da memória.
     void setPointer (int address);

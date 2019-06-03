@@ -3,6 +3,8 @@
 
 #include "../include/instruction.hpp"
 #include "../include/memory.hpp"
+#include "../include/ula.hpp"
+#include "../include/control.hpp"
 
 int main (int argc, char* argv[]) {
     if (argc == 1) {
@@ -18,24 +20,33 @@ int main (int argc, char* argv[]) {
     
     std::vector<Instruction> soft;  // Lista com as instruções do programa.
 
+    Memory mem;                     // Instância da memória
+    int addr;                       // Endereço do registrador a ser lido
     std::string element;            // Elementos que serão lidos do arquivo de entrada
-    while (input >> element) {
-        if (Instruction::isInstruction(element)) {
-            Instruction::Code type = Instruction::stringToInstruction(element);
 
-            if (type == Instruction::Code::NOP || type == Instruction::Code::NOT || type == Instruction::Code::HLT) {
-                Instruction inst(type);
-                soft.push_back(inst);
-            } else {
-                int addr;
-                input >> addr;
-                Instruction inst(type, addr);
-                soft.push_back(inst);
-            }
+    while (input >> addr >> element) {
+        if (Instruction::isInstruction(element)) {
+            Instruction::Code inst = Instruction::stringToInstruction(element);
+            mem.writeR(addr, (int)inst);
+        } else {
+            mem.writeR(addr, std::stoi(element));
         }
     }
-
-    // Cria uma instância da memória com o programa lido.
-    Memory mem(soft);
     
+    ULA ula;
+    PC pc(mem, ula);
+
+    while (!pc.reachedEnd()) {
+        pc.FS();
+        pc.FTE();
+        pc.updateState();
+    }
+
+    for (int i = 128; i < 256; i++) {
+        int value = mem.readR(i);
+        if (value == 0)
+            break;
+
+        std::cout << i << "\t" << value << std::endl;
+    }
 }
